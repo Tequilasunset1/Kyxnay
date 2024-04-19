@@ -14,11 +14,11 @@ export class MeatStorage extends Storage {
         if(MeatStorage.meshSample == undefined) {
             MeatStorage.meshSample = new Promise((resolve, reject) => {
                 var mtlLoader = new MTLLoader();
-                mtlLoader.load('./src/3D_Objects/M.mtl', function(materials) {
+                mtlLoader.load('./src/3D_Objects/Me.mtl', function(materials) {
                     materials.preload();
                     var objLoader = new OBJLoader();
                     objLoader.setMaterials(materials);
-                    objLoader.load('./src/3D_Objects/M.obj', function(object) {
+                    objLoader.load('./src/3D_Objects/Me.obj', function(object) {
                         const box = new THREE.Box3().setFromObject(object);
                         const size = new THREE.Vector3();
                         box.getSize(size);

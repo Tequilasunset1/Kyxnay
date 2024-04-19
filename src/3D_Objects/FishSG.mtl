@@ -1,0 +1,43 @@
+# Blender 3.5.1 MTL File: 'meat.blend'
+# www.blender.org
+
+newmtl Kitchen_Cabins.008
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Overcooked AP_Kitchen_Cabins_BaseColor.png
+map_Ns Overcooked AP_Kitchen_Cabins_Roughness.png
+map_refl Overcooked AP_Kitchen_Cabins_Metallic.png
+
+newmtl Material.011
+Ns 360.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.161680 0.057180
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl Material.012
+Ns 360.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.161680 0.057180
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl Material.013
+Ns 360.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.161680 0.057180
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
