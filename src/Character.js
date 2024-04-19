@@ -4,6 +4,8 @@ import { Storage } from './Storages/Storage.js';
 import { Trash } from './Objects/Trash.js';
 import { Station } from './Objects/Station.js';
 import { AudioManager } from './AudioManager.js';
+import { MTLLoader } from 'mtl';
+import { OBJLoader } from 'obj';
 
 export class Character extends THREE.Group {
     codes = [
@@ -14,6 +16,8 @@ export class Character extends THREE.Group {
         'KeyF'
     ];
 
+    static meshSample = undefined;
+
     pressed;
 
     objInHands;
@@ -22,11 +26,49 @@ export class Character extends THREE.Group {
 
     constructor() {
         super();
+
+        if(Character.meshSample == undefined) {
+            Character.meshSample = new Promise((resolve, reject) => {
+                var mtlLoader = new MTLLoader();
+                mtlLoader.load('./src/3D_Objects/Pers.mtl', function(materials) {
+                    materials.preload();
+                    var objLoader = new OBJLoader();
+                    objLoader.setMaterials(materials);
+                    objLoader.load('./src/3D_Objects/Pers.obj', function(object) {
+                        const box = new THREE.Box3().setFromObject(object);
+                        const size = new THREE.Vector3();
+                        box.getSize(size);
+                        const scaleX = 1.5 / size.x;
+                        const scaleY = 1.5 / size.y;
+                        const scaleZ = 1.5 / size.z;
+                        object.scale.set(scaleX, scaleY, scaleZ);
+                        object.traverse(function(object) {
+                            object.scale.set(scaleX, scaleY, scaleZ);
+                        });
+                        const mesh = object;
+                        resolve(mesh);
+                    }.bind(this), undefined);
+                }.bind(this));
+            });
+        }
+
+        const self = this;
+
+        Character.meshSample.then((mesh)=>
+        {
+            mesh.children.forEach((child)=>
+            {
+                child.castShadow = true;
+                child.receiveShadow= true;
+                self.add(child.clone());
+            });
+        });
+
         this.walkSpeed = 0.1;
         this.objInHands = null;
         this.pressed = new Set();
 
-        this.add(new THREE.Mesh(new THREE.BoxGeometry(0.1, 5, 0.1), new THREE.MeshStandardMaterial({color: 0xffffff})));
+        //this.add(new THREE.Mesh(new THREE.BoxGeometry(0.1, 5, 0.1), new THREE.MeshStandardMaterial({color: 0xffffff})));
 
         document.addEventListener('keydown', event => this.onKeyDown(event), false);
         document.addEventListener('keyup', event => this.onKeyUp(event), false);
@@ -119,4 +161,7 @@ export class Character extends THREE.Group {
         });
         this.intersectionObject = object;
     }
+
+
+    
 }
