@@ -85,7 +85,6 @@ export class Character extends THREE.Group {
         })
         this.castShadow = true;
         this.receiveShadow = true;
-        // TODO: СЮда хагрузчик объекта
     }
   
     put() {

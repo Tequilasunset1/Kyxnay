@@ -18,8 +18,6 @@ class Task {
         this.dish = dish;
     }
 
-    // TODO: вывод инфы о блюде в UI
-
     toComplete(plate) {
         if(this.dish.equals(plate.ingridients)) {
             // console.log('Ты смешарик')
