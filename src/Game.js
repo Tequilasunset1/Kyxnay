@@ -3,6 +3,13 @@ import { Kitchen } from './Kitchen.js';
 import { Character } from './Character.js';
 import { TaskManager } from './TaskManager.js';
 import { AudioManager } from './AudioManager.js';
+import { Bread } from './Ingredients/Bread.js';
+import { Fish } from './Ingredients/Fish.js';
+import { Meat } from './Ingredients/Meat.js';
+import { Potato } from './Ingredients/Potato.js';
+import { Rice } from './Ingredients/Rice.js';
+import { Salat } from './Ingredients/Salat.js';
+import { Tomat } from './Ingredients/Tomat.js';
 
 export class Game {
     scene;
@@ -43,8 +50,8 @@ export class Game {
         this.scene.add(this.camera, this.plane, this.grid);
 
         this.kitchen = new Kitchen(this.scene);
-        this.taskManager = new TaskManager();
-        this.taskManager.createRandomTask();///////////////////////////////////////////////////////
+        this.taskManager = null;
+        // this.taskManager.createRandomTask();///////////////////////////////////////////////////////
         // this.taskManager.createRandomTask();///////////////////////////////////////////////////////
         // this.taskManager.createRandomTask();///////////////////////////////////////////////////////
 
@@ -54,7 +61,11 @@ export class Game {
 
         this.setupLights();
 
-        this.renderer.setAnimationLoop(this.render);
+        // this.renderer.setAnimationLoop(this.render);
+    }
+
+    prerender = () => {
+        this.renderer.render(this.scene, this.camera);
     }
 
     render = () => {
@@ -101,7 +112,35 @@ export class Game {
 
 }
 
-window.onload = () => {
+function keydownHandler(event) {
+    document.getElementById('root-window').style.display = 'flex';
+    document.getElementById('Loading-window').style.display = 'none';
+    window.game.resizeWindow();
+    window.game.taskManager = new TaskManager();
+    window.game.taskManager.createRandomTask();
+    window.game.renderer.setAnimationLoop(window.game.render);
+    AudioManager.playBackgroundSound();
+    document.removeEventListener('keydown', keydownHandler);
+  }
+  
+  window.onload = async () => {
     window.game = new Game();
-    AudioManager.initializeSounds();
-}
+    window.game.renderer.setAnimationLoop(window.game.prerender);
+    await AudioManager.initializeSounds();
+
+    let ingridients = [new Bread(), new Fish(), new Meat(), new Potato(), new Rice(), new Salat(), new Tomat()];
+    ingridients.forEach(e => {
+        window.game.scene.add(e);
+    });
+
+    await new Promise(r => setTimeout(r, 10000)); // тип время для загрузки текстурок ))))
+
+    ingridients.forEach(e => {
+        window.game.scene.remove(e);
+    });
+
+    // Добавление обработчика нажатия клавиши
+    document.addEventListener('keydown', keydownHandler);
+    document.getElementById('load-info').innerHTML = 'Press any button';
+  };  
+
