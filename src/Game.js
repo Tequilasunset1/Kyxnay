@@ -71,8 +71,8 @@ export class Game {
         light1.position.set(-5, 8, 0);
 
         light1.castShadow = true;
-        light1.shadow.mapSize.width= 1024;
-        light1.shadow.mapSize.height = 1024;
+        light1.shadow.mapSize.width= 0; // 1024
+        light1.shadow.mapSize.height = 0; // 1024
 
         light1.shadow.camera.near = 0.1;
         light1.shadow.camera.far = 30;
@@ -83,8 +83,8 @@ export class Game {
         light2.position.set(5, 8, 0);
 
         light2.castShadow = true;
-        light2.shadow.mapSize.width= 1024;
-        light2.shadow.mapSize.height = 1024;
+        light2.shadow.mapSize.width= 0; // 1024
+        light2.shadow.mapSize.height = 0; // 1024
 
         light2.shadow.camera.near = 0.1;
         light2.shadow.camera.far = 100;

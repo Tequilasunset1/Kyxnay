@@ -16,7 +16,13 @@ export class Character extends THREE.Group {
         'KeyF'
     ];
 
+    intersectRadius = 0.5;
     static meshSample = undefined;
+
+    intersectDirection = {
+        x: 0,
+        z: 0
+    };
 
     pressed;
 
@@ -84,10 +90,10 @@ export class Character extends THREE.Group {
   
     put() {
         this.remove(this.objInHands);
+        AudioManager.playPolSound();
         this.objInHands = this.intersectionObject.put(this.objInHands);
         if(this.objInHands != null) {
-            AudioManager.playPolSound();
-            this.objInHands.position.y = this.position.y + 2.6;
+            this.objInHands.position.y = this.position.y + 1.6;
             this.add(this.objInHands);
         }
     }
@@ -96,7 +102,7 @@ export class Character extends THREE.Group {
         this.objInHands = this.intersectionObject.take();
         if(this.objInHands != null) {
             AudioManager.playVzyalSound();
-            this.objInHands.position.y = this.position.y + 2.6;
+            this.objInHands.position.y = this.position.y+1.6;
             this.add(this.objInHands);
         }
     }
@@ -104,18 +110,56 @@ export class Character extends THREE.Group {
     simulate() {
         this.hasIntersection();
 
-        if(this.pressed.has('KeyS')) {
-            this.position.z += this.walkSpeed;
+        // console.log(this.intersectDirection)
+
+        let deltaX = 0, deltaZ = 0;
+
+        if(this.pressed.has('KeyS') && this.intersectDirection.z != 1) {
+            deltaZ += this.walkSpeed;
         }
-        if(this.pressed.has('KeyW')) {
-            this.position.z -= this.walkSpeed;
+        if(this.pressed.has('KeyW') && this.intersectDirection.z != -1) {
+            deltaZ -= this.walkSpeed;
         }
-        if(this.pressed.has('KeyA')) {
-            this.position.x -= this.walkSpeed;
+        if(this.pressed.has('KeyA') && this.intersectDirection.x != -1) {
+            deltaX -= this.walkSpeed;
         }
-        if(this.pressed.has('KeyD')) {
-            this.position.x += this.walkSpeed;
+        if(this.pressed.has('KeyD') && this.intersectDirection.x != 1) {
+            deltaX += this.walkSpeed;
         }
+
+        this.position.x += deltaX;
+        this.position.z += deltaZ;
+
+        //#region Rotation
+        if(deltaZ > 0 && deltaX > 0) {
+          this.rotation.y = -Math.PI * 2 * 7 / 8;
+          // this.rotation.y = -Math.PI * 2 * 5 / 8;
+        }
+        else if(deltaZ > 0 && deltaX < 0) {
+          this.rotation.y = -Math.PI * 2 * 1 / 8;
+          // this.rotation.y = -Math.PI * 2 * 3 / 8;
+        }
+        else if(deltaZ > 0) {
+          this.rotation.y = Math.PI * 2 * 0 / 8;
+        }
+        else if(deltaZ < 0 && deltaX > 0) {
+          // this.rotation.y = -Math.PI * 2 * 7 / 8;
+          this.rotation.y = -Math.PI * 2 * 5 / 8;
+        }
+        else if(deltaZ < 0 && deltaX < 0) {
+          // this.rotation.y = -Math.PI * 2 * 1 / 8;
+          this.rotation.y = -Math.PI * 2 * 3 / 8;
+        }
+        else if(deltaZ < 0) {
+          this.rotation.y = Math.PI * 2 * 4 / 8;
+        }
+        else if(deltaX > 0) {
+          this.rotation.y = Math.PI * 2 * 2 / 8;
+        }
+        else if(deltaX < 0) {
+          this.rotation.y = Math.PI * 2 * 6 / 8;
+        }
+        //#endregion
     }
 
     onKeyDown(event) {
@@ -146,22 +190,36 @@ export class Character extends THREE.Group {
     };
 
     hasIntersection() {
-        // const char = new THREE.Box3().setFromObject(this);
-        // console.log(char)
         let object = undefined;
+        let x = 0;
+        let z = 0;
         window.game.kitchen.objects.forEach(obj => {
             const col = new THREE.Box3().setFromObject(obj);
             if(/*char.intersect(col)*/
-                this.position.x >= col.min.x && this.position.x <= col.max.x &&
-                this.position.z >= col.min.z && this.position.z <= col.max.z
+                this.position.x >= col.min.x - this.intersectRadius && this.position.x <= col.max.x + this.intersectRadius &&
+                this.position.z >= col.min.z - this.intersectRadius && this.position.z <= col.max.z + this.intersectRadius
             ) {
                 // this.intersectionObject = obj;
                 object = obj;
+                if(obj.position.x > this.position.x) {
+                    x = 1;
+                }
+                else {
+                    x = -1;
+                }
+
+                if(obj.position.z > this.position.z) {
+                    z = 1;
+                }
+                else {
+                    z = -1;
+                }
             }
         });
         this.intersectionObject = object;
-    }
-
-
-    
+        this.intersectDirection = {
+            x: x,
+            z: z
+        }
+    }    
 }
