@@ -4,6 +4,18 @@ export class Dish extends THREE.Group {
     ingridients = new Set();
     time = 60;
 
+    getName() {
+        return this.constructor.name;
+    }
+
+    getIngridients() {
+        return this.ingridients;
+    }
+
+    getTime() {
+        return this.time;
+    }
+
     constructor() {
         super();
     }

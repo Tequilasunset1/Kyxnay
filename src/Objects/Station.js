@@ -9,6 +9,16 @@ export class Station extends THREE.Group {
     maxTime = 5;
     elapsedTime = 0;
 
+    getName() {
+        return this.constructor.name;
+    }
+
+    getTime() {
+        if(this.clock.running) return Math.floor(this.maxTime - this.elapsedTime);
+        else if(this.cookedObject != null) return 'Wait';
+        return 'Free';
+    }
+
     constructor(operationType) {
        super();
        this.operationType = operationType;

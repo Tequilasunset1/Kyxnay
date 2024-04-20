@@ -30,11 +30,12 @@ export class Kitchen {
     }
 
     simulate() {
-        this.objects.forEach(e => {
-            if(e instanceof Station) {
-                e.simulate();
-            }
+        let stations = this.objects.filter(e => e instanceof Station);
+        stations.forEach(e => {
+            e.simulate();
         });
+
+        window.ui.updateStationTime(stations);
     }
 
     getRandomLvl() {

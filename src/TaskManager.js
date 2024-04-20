@@ -5,6 +5,14 @@ class Task {
     dish;
     currentTime = 0;
 
+    getInfo() {
+        return {
+            dishName: this.dish.getName(),
+            time: Math.floor(this.dish.time - this.currentTime),
+            ingridients: this.dish.getIngridients()
+        }
+    }
+
     constructor(dish) {
         this.dish = dish;
     }
@@ -65,7 +73,7 @@ export class TaskManager {
     simulate() {
         let delta = this.clock.getDelta();
         // console.log(delta);
-        this.timeSkip += delta;
+        if(this.tasks.length < this.tasksMaxCount) this.timeSkip += delta;
         if(this.tasks.length < this.tasksMaxCount && this.timeSkip >= 10) {
             this.timeSkip = 0;
             this.createRandomTask();
@@ -83,6 +91,8 @@ export class TaskManager {
 
         tasksToRemove.forEach(e => {
             this.removeTask(e);
-        });
+        });        
+
+        window.ui.updateTasksMenu(this.tasks);
     }
 }
