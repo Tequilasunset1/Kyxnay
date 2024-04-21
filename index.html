@@ -3,29 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        html, body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-        }
-
-        #root-window {
-            width: 100%;
-            height: 100%;
-        }
-
-        #render-target {
-            height: 100%;
-            width: 100%;
-            position: relative;
-        }
-    </style>
+    <link rel="stylesheet" href="./ui_styles.css">
 
     <title>Kuhnay</title>
 </head>
 <body>
+    <div id="Loading-window">
+        <div id="load-info" class="load-info">Loading</div>
+    </div>
     <div id="root-window">
+        <div id="tasks">
+            <!-- <div class="task">
+                <div class="dish-name">ComboDish</div>
+                <div class="ingridients">
+                    <div>Tomato</div>
+                    <div>Tomato</div>
+                    <div>Tomato</div>
+                    <div>Tomato</div>
+                    <div>Tomato</div>
+                    <div>Tomat12321o</div>
+                    <div>Tom21321321ato</div>
+                    <div>Tom321312ato</div>
+                    <div>3213214Tomato</div>
+                    <div>To3245435mato</div>
+                </div>
+                <div class="time">120.321</div>
+            </div>
+            <div class="task">
+                <div class="dish-name">ComboDish</div>
+                <div class="ingridients">
+                    <div>Tomato</div>
+                    <div>Tomato</div>
+                    <div>Tomato</div>
+                    <div>Tomato</div>
+                    <div>Tomato</div>
+                    <div>Tomat12321o</div>
+                    <div>Tom21321321ato</div>
+                    <div>Tom321312ato</div>
+                    <div>3213214Tomato</div>
+                    <div>To3245435mato</div>
+                </div>
+                <div class="time">120.321</div>
+            </div>
+            <div class="task">
+                <div class="dish-name">ComboDish</div>
+                <div class="ingridients">
+                    <div>Tomato</div>
+                    <div>Tomato</div>
+                    <div>Tomato</div>
+                    <div>Tomato</div>
+                    <div>Tomato</div>
+                    <div>Tomat12321o</div>
+                    <div>Tom21321321ato</div>
+                    <div>Tom321312ato</div>
+                    <div>3213214Tomato</div>
+                    <div>To3245435mato</div>
+                </div>
+                <div class="time">120.321</div>
+            </div> -->
+        </div>
+        <div id="stations-info">
+            <div class="station-info">
+                <div class="station-name">FryStation:</div>
+                <div id="fry-time" class="station-time">325</div>
+            </div>
+            <div class="station-info">
+                <div class="station-name">CookStation:</div>
+                <div id="cook-time" class="station-time">43</div>
+            </div>
+            <div class="station-info">
+                <div class="station-name">CutStation:</div>
+                <div id="cut-time" class="station-time">124</div>
+            </div>
+        </div>
         <div id="render-target"></div>
     </div>
 </body>

@@ -6,6 +6,7 @@ export class Plate extends THREE.Group{
     ingridients = new Set(); // Хранит только типы ингридиентов
 
     static meshSample = undefined;
+    y = 0.1;
     
     constructor() {
         super();
@@ -57,6 +58,9 @@ export class Plate extends THREE.Group{
 
     put(ingridient) {
         this.ingridients.add(ingridient.ingridientType);
+        ingridient.position.y = this.y;
+        this.y+=0.1;
+        this.add(ingridient);
         console.log(this.ingridients)
     }
 }

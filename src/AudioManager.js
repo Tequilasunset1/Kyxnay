@@ -8,6 +8,9 @@ export class AudioManager {
     static cutSound;
     static vzaylSound;
     static polSound;
+    static daliSound;
+    static otDaliSound;
+
     audioListener;
 
     static async initializeSounds() {
@@ -24,6 +27,8 @@ export class AudioManager {
         this.vzaylSound = new THREE.Audio(this.audioListener);
         this.polSound = new THREE.Audio(this.audioListener);
 
+        this.daliSound = new THREE.Audio(this.audioListener);
+        this.otDaliSound = new THREE.Audio(this.audioListener);
 
         let buffer = await new Promise((resolve, reject) => {
             this.#audioLoader.load('./src/Zvuk/Fon.mp3', resolve, undefined, reject);
@@ -65,6 +70,17 @@ export class AudioManager {
         this.polSound.setBuffer(buffer);
         this.polSound.setVolume(1);
 
+        buffer = await new Promise((resolve, reject) => {
+            this.#audioLoader.load('./src/Zvuk/Dali.mp3', resolve, undefined, reject);
+        });
+        this.daliSound.setBuffer(buffer);
+        this.daliSound.setVolume(1);
+
+        buffer = await new Promise((resolve, reject) => {
+            this.#audioLoader.load('./src/Zvuk/OtDali.mp3', resolve, undefined, reject);
+        });
+        this.otDaliSound.setBuffer(buffer);
+        this.otDaliSound.setVolume(1);
     }
 
     static playBackgroundSound() {
@@ -73,7 +89,6 @@ export class AudioManager {
     }
     
     static playJarkaSound() {
-        
         this.jarkaSound.play();
     }
 
@@ -109,5 +124,13 @@ export class AudioManager {
     static playPolSound() {
         this.polSound.stop();  
         this.polSound.play();
+    }
+
+    static playDaliSound() {
+        this.daliSound.play();
+    }
+
+    static playOtDaliSound() {
+        this.otDaliSound.play();
     }
 }
