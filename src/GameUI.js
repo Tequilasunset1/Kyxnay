@@ -9,22 +9,26 @@ export class GameUI {
             var taskDiv = document.createElement("div");
             taskDiv.classList.add("task");
 
-            var dishNameDiv = document.createElement("div");
-            dishNameDiv.classList.add("dish-name");
-            dishNameDiv.textContent = task.getInfo().dishName;
+            var dishNameDiv = document.createElement("img");
+            // dishNameDiv.classList.add("dish-name");
+            dishNameDiv.classList.add("dish-name-img");
+            dishNameDiv.src = `./Images/${task.getInfo().dishName}.png`;
+            // dishNameDiv.textContent = task.getInfo().dishName;
 
             var ingredientsDiv = document.createElement("div");
             ingredientsDiv.classList.add("ingridients");
 
             task.getInfo().ingridients.forEach(ing => {
-                var ingredientDiv = document.createElement("div");
-                ingredientDiv.textContent = ing;
+                var ingredientDiv = document.createElement("img");
+                ingredientDiv.src = `./Images/${ing}.png`;
                 ingredientsDiv.appendChild(ingredientDiv);
             });
 
             var time = document.createElement("div");
             time.classList.add("time");
-            time.textContent = task.getInfo().time;
+            let a = task.getInfo().time / task.dish.time * 100;
+            time.style.width = `${a + 1}%`;
+            // time.textContent = task.getInfo().time;
 
             taskDiv.appendChild(dishNameDiv);
             taskDiv.appendChild(ingredientsDiv);
@@ -38,8 +42,7 @@ export class GameUI {
         var stationsInfoDiv = document.getElementById("stations-info");
         while (stationsInfoDiv.firstChild) {
             stationsInfoDiv.removeChild(stationsInfoDiv.firstChild);
-          }
-
+        }
 
         // Создание элементов и добавление их в родительский элемент
         stations.forEach(function(station) {
@@ -63,6 +66,15 @@ export class GameUI {
         stationInfoDiv.appendChild(stationTimeDiv);
         stationsInfoDiv.appendChild(stationInfoDiv);
         });
+    }
+
+    updateLevelTime(time) {
+        let minutes = Math.floor(time / 60);
+        let seconds = `${time - minutes*60}`;
+        if(time - minutes*60 < 10) {
+            seconds = '0' + seconds;
+        }
+        document.getElementById('levelTime').innerText = `${minutes}:${seconds}`;
     }
 }
 

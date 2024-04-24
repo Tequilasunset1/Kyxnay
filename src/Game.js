@@ -20,6 +20,9 @@ export class Game {
     gameWindow;
     taskManager;
 
+    levelTime = 3 * 60;
+    currentTime = 3 * 60;
+
     constructor() {
         this.gameWindow = document.getElementById('render-target');
 
@@ -58,6 +61,7 @@ export class Game {
         this.character = new Character();
         this.character.position.set(0,0,0);
         this.scene.add(this.character);
+        this.clock = new THREE.Clock();
 
         this.setupLights();
 
@@ -69,12 +73,31 @@ export class Game {
     }
 
     render = () => {
+        this.currentTime -= this.clock.getDelta();
+        if(this.currentTime <= 0) {
+            this.Loading();
+            this.kitchen.getNextLevel();
+        }
+        else {
+            window.ui.updateLevelTime(Math.floor(this.currentTime));
+        }
+
         this.character.simulate();
 
         this.taskManager.simulate();
         this.kitchen.simulate();
 
         this.renderer.render(this.scene, this.camera);
+    }
+
+    async Loading() {
+        this.renderer.setAnimationLoop(window.game.prerender);
+
+        await new Promise(r => setTimeout(r, 500)); // тип время для загрузки текстурок ))))
+        this.character.position.x = 0;
+        this.character.position.z = 0;
+        this.currentTime = this.levelTime;
+        this.renderer.setAnimationLoop(window.game.render);
     }
 
     setupLights() {

@@ -126,8 +126,15 @@ export class Character extends THREE.Group {
             deltaX += this.walkSpeed;
         }
 
-        this.position.x += deltaX;
-        this.position.z += deltaZ;
+        let newPos = this.position.clone();
+        newPos.x += deltaX;
+        newPos.z += deltaZ;
+        if(!this.collisionEnter(newPos)) {
+            this.position.x = newPos.x;
+            this.position.z = newPos.z;
+        }
+        // this.position.x += deltaX;
+        // this.position.z += deltaZ;
 
         //#region Rotation
         if(deltaZ > 0 && deltaX > 0) {
@@ -188,10 +195,27 @@ export class Character extends THREE.Group {
         if(this.codes.includes(event.code)) this.pressed.delete(event.code);
     };
 
+    collisionEnter(pos) {
+        let flag = window.game.kitchen.objects.some(obj => {
+            return this.hasIntersectionWithObject(obj, 0.1, pos);
+        });
+        // console.log(flag);
+        return flag;
+    }
+
+    hasIntersectionWithObject(obj, actionRadius = null, pos) {
+        if(actionRadius == null) actionRadius = obj.actionRadius;
+        const col = new THREE.Box3().setFromObject(obj);
+        if( pos.x >= col.min.x - actionRadius && pos.x <= col.max.x + actionRadius &&
+            pos.z >= col.min.z - actionRadius && pos.z <= col.max.z + actionRadius
+        ) {
+            return true;
+        }
+        return false;
+    }   
+
     hasIntersection() {
         let object = undefined;
-        let x = 0;
-        let z = 0;
         window.game.kitchen.objects.forEach(obj => {
             const col = new THREE.Box3().setFromObject(obj);
             if(/*char.intersect(col)*/
@@ -200,25 +224,8 @@ export class Character extends THREE.Group {
             ) {
                 // this.intersectionObject = obj;
                 object = obj;
-                if(obj.position.x > this.position.x) {
-                    x = 1;
-                }
-                else {
-                    x = -1;
-                }
-
-                if(obj.position.z > this.position.z) {
-                    z = 1;
-                }
-                else {
-                    z = -1;
-                }
             }
         });
         this.intersectionObject = object;
-        this.intersectDirection = {
-            x: x,
-            z: z
-        }
     }    
 }

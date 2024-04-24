@@ -21,12 +21,13 @@ import { PlateTable } from './Objects/PlateTable.js';
 export class Kitchen {
     objects = [];
 
-    lvls = [1,2];
     scene;
+    currentLvl = 1;
+    lvlCounts = 3;
 
     constructor(scene) {
         this.scene = scene;
-        this.getRandomLvl();
+        this.getLvl(this.currentLvl);
     }
 
     simulate() {
@@ -38,7 +39,7 @@ export class Kitchen {
         window.ui.updateStationTime(stations);
     }
 
-    getRandomLvl() {
+    getLvl(lvlNumber) {
         let wall = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.5, 30), new THREE.MeshPhongMaterial({color: 0x777777}));
         wall.position.y = 0.25;
 
@@ -56,9 +57,6 @@ export class Kitchen {
         this.objects.push(wallLeft, wallRight, wallFront, wallBack);
         this.scene.add(wallLeft, wallRight, wallFront, wallBack);
 
-
-        let lvl = Math.floor(Math.random() * this.lvls.length);
-
         let breadStorage = new BreadStorage(IngridientsTypes.Bread);
         let meatStorage = new MeatStorage(IngridientsTypes.Meat);
         let salatStorage = new SalatStorage(IngridientsTypes.Salat);
@@ -74,7 +72,7 @@ export class Kitchen {
         let cutStation = new CutStation();
         let cookStation = new CookStation();
         let completeTable = new CompleteTable();
-        switch(lvl) {
+        switch(lvlNumber-1) {
             case 0:
                 //#region LVL_1;
                 breadStorage.position.set(-8, 0, 7);
@@ -125,7 +123,7 @@ export class Kitchen {
                 //#endregion
                 break;
             case 1 :
-                 //#region LVL_2;
+                //#region LVL_2;
                  
                  breadStorage.position.set(10, 0, -5);
                  this.objects.push(breadStorage);
@@ -174,7 +172,7 @@ export class Kitchen {
                  //#endregion
                  break;
             case 2:
-                            //#region LVL_3;
+                //#region LVL_3;
             breadStorage.position.set(-5, 0, 5);
             this.objects.push(breadStorage);
  
@@ -222,8 +220,21 @@ export class Kitchen {
             //#endregion
              break;
             default:
-                console.log(`Lelel number ${lvl} is not defined`);
+                console.log(`Level number ${lvl} is not defined`);
+        }            
+    }
+
+    getNextLevel() {
+        this.objects.forEach(obj => {
+            this.scene.remove(obj);
+        });
+        this.objects.splice(0, this.objects.length)
+        if(this.currentLvl == this.lvlCounts) {
+            this.currentLvl = 1;
         }
-            
+        else {
+            this.currentLvl++;
+        }
+        this.getLvl(this.currentLvl);
     }
 }
