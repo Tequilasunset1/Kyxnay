@@ -44,10 +44,10 @@ export class Game {
         this.plane.castShadow = true;
         this.plane.receiveShadow = true;
 
-        this.grid = new THREE.GridHelper(30, 30);
-        this.grid.position.set(0,0.01,0);
+        // this.grid = new THREE.GridHelper(30, 30);
+        // this.grid.position.set(0,0.01,0);
 
-        this.scene.add(this.camera, this.plane, this.grid);
+        this.scene.add(this.camera, this.plane);
 
         this.kitchen = new Kitchen(this.scene);
         this.taskManager = null;
@@ -79,11 +79,11 @@ export class Game {
 
     setupLights() {
         let light1 = new THREE.PointLight(0xffffff, 500);
-        light1.position.set(-5, 8, 0);
+        light1.position.set(0/*-5*/, 8, 0);
 
         light1.castShadow = true;
-        light1.shadow.mapSize.width= 1024;
-        light1.shadow.mapSize.height = 1024;
+        light1.shadow.mapSize.width= 512;
+        light1.shadow.mapSize.height = 512;
 
         light1.shadow.camera.near = 0.1;
         light1.shadow.camera.far = 30;
@@ -94,13 +94,13 @@ export class Game {
         light2.position.set(5, 8, 0);
 
         light2.castShadow = true;
-        light2.shadow.mapSize.width= 1024;
-        light2.shadow.mapSize.height = 1024;
+        light2.shadow.mapSize.width= 512;
+        light2.shadow.mapSize.height = 512;
 
         light2.shadow.camera.near = 0.1;
-        light2.shadow.camera.far = 100;
+        light2.shadow.camera.far = 30;
         light2.shadow.normalBias = 0.01;
-        this.scene.add(light2);
+        // this.scene.add(light2);
         this.scene.add(new THREE.AmbientLight(0xffffff, 0.5));
     }
 
@@ -133,7 +133,7 @@ function keydownHandler(event) {
         window.game.scene.add(e);
     });
 
-    await new Promise(r => setTimeout(r, 10000)); // тип время для загрузки текстурок ))))
+    await new Promise(r => setTimeout(r, 1000)); // тип время для загрузки текстурок ))))
 
     ingridients.forEach(e => {
         window.game.scene.remove(e);

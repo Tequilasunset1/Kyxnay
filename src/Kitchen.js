@@ -21,7 +21,7 @@ import { PlateTable } from './Objects/PlateTable.js';
 export class Kitchen {
     objects = [];
 
-    lvls = [1];
+    lvls = [1,2];
     scene;
 
     constructor(scene) {
@@ -40,62 +40,66 @@ export class Kitchen {
 
     getRandomLvl() {
         let lvl = Math.floor(Math.random() * this.lvls.length);
+
+        let breadStorage = new BreadStorage(IngridientsTypes.Bread);
+        let meatStorage = new MeatStorage(IngridientsTypes.Meat);
+        let salatStorage = new SalatStorage(IngridientsTypes.Salat);
+        let fishStorage = new FishStorage(IngridientsTypes.Fish);
+        let tomatStorage = new TomatStorage(IngridientsTypes.Water);
+        let riceStorage = new RiceStorage(IngridientsTypes.Rice);
+        let potatoStorage = new PotatoStorage(IngridientsTypes.Potato);
+        let plateStorage = new PlateStorage();
+        let trash = new Trash();
+        let table1 = new PlateTable();
+        let fryStation = new FryStation();
+
+        let cutStation = new CutStation();
+        let cookStation = new CookStation();
+        let completeTable = new CompleteTable();
         switch(lvl) {
             case 0:
                 //#region LVL_1;
-                let breadStorage = new BreadStorage(IngridientsTypes.Bread);
+                
                 breadStorage.position.set(-8, 0, 7);
                 this.objects.push(breadStorage);
 
-                let meatStorage = new MeatStorage(IngridientsTypes.Meat);
                 meatStorage.position.set(-5, 0, 7);
                 this.objects.push(meatStorage);
 
-                let salatStorage = new SalatStorage(IngridientsTypes.Salat);
                 salatStorage.position.set(-2, 0, 7);
                 this.objects.push(salatStorage);
 
-                let fishStorage = new FishStorage(IngridientsTypes.Fish);
                 fishStorage.position.set(1, 0, 7);
                 this.objects.push(fishStorage);
 
-                let tomatStorage = new TomatStorage(IngridientsTypes.Water);
+
                 tomatStorage.position.set(4, 0, 7);
                 this.objects.push(tomatStorage);
 
-                let riceStorage = new RiceStorage(IngridientsTypes.Rice);
                 riceStorage.position.set(7, 0, 7);
                 this.objects.push(riceStorage);
 
-                let potatoStorage = new PotatoStorage(IngridientsTypes.Rice);
                 potatoStorage.position.set(10, 0, 7);
                 this.objects.push(potatoStorage);
 
-                let plateStorage = new PlateStorage()
                 plateStorage.position.set(5, 0, 3);
                 this.objects.push(plateStorage)
 
-                let trash = new Trash();
                 trash.setPosition(-5, 0, 0);
                 this.objects.push(trash);
 
-                let table1 = new PlateTable();
                 table1.setPosition(-4, 0, -4);
                 this.objects.push(table1);
 
-                let fryStation = new FryStation();
                 fryStation.position.set(0,0, -7);
                 this.objects.push(fryStation);
 
-                let cutStation = new CutStation();
                 cutStation.position.set(2,0, -7);
                 this.objects.push(cutStation);
 
-                let cookStation = new CookStation();
                 cookStation.position.set(4,0, -7);
                 this.objects.push(cookStation);
 
-                let completeTable = new CompleteTable();
                 completeTable.position.set(8,0, -7);
                 this.objects.push(completeTable);
         
@@ -103,6 +107,103 @@ export class Kitchen {
                     plateStorage, cutStation, cookStation, completeTable);
                 //#endregion
                 break;
+            case 1 :
+                 //#region LVL_2;
+                 
+                 breadStorage.position.set(10, 0, -5);
+                 this.objects.push(breadStorage);
+             
+                 meatStorage.position.set(10, 0, -3);
+                 this.objects.push(meatStorage);
+ 
+                 salatStorage.position.set(10, 0, -1);
+                 this.objects.push(salatStorage);
+               
+                 fishStorage.position.set(10, 0, 1);
+                 this.objects.push(fishStorage);
+                 
+                 tomatStorage.position.set(10, 0, 3);
+                 this.objects.push(tomatStorage);
+              
+                 riceStorage.position.set(10, 0, 5);
+                 this.objects.push(riceStorage);
+                 
+                 potatoStorage.position.set(10, 0, 7);
+                 this.objects.push(potatoStorage);
+               
+                 plateStorage.position.set(-10, 0, 3);
+                 this.objects.push(plateStorage)
+                 
+                 trash.setPosition(-10, 0, 5);
+                 this.objects.push(trash);
+               
+                 table1.setPosition(-10, 0, 1);
+                 this.objects.push(table1);
+                 
+                 fryStation.position.set(-10,0, 7);
+                 this.objects.push(fryStation);
+                
+                 cutStation.position.set(-10,0, -2);
+                 this.objects.push(cutStation);
+ 
+                 cookStation.position.set(-10,0, -4);
+                 this.objects.push(cookStation);
+ 
+                 completeTable.position.set(-10,0, -6);
+                 this.objects.push(completeTable);
+         
+                 this.scene.add(breadStorage, trash, fryStation, table1, meatStorage, salatStorage, fishStorage, tomatStorage, riceStorage, potatoStorage, 
+                     plateStorage, cutStation, cookStation, completeTable);
+                 //#endregion
+                 break;
+            case 2:
+                            //#region LVL_3;
+            breadStorage.position.set(-5, 0, 5);
+            this.objects.push(breadStorage);
+ 
+            meatStorage.position.set(-5, 0, 7);
+            this.objects.push(meatStorage);
+  
+             salatStorage.position.set(0, 0, 5);
+             this.objects.push(salatStorage);
+   
+             fishStorage.position.set(0, 0, 7);
+             this.objects.push(fishStorage);
+
+             tomatStorage.position.set(5, 0, 5);
+             this.objects.push(tomatStorage);
+  
+             riceStorage.position.set(5, 0, 7);
+             this.objects.push(riceStorage);
+
+             potatoStorage.position.set(10, 0, 7);
+             this.objects.push(potatoStorage);
+   
+             plateStorage.position.set(10, 0, 5);
+             this.objects.push(plateStorage)
+
+             trash.setPosition(-5, 0, -10);
+             this.objects.push(trash);
+   
+             table1.setPosition(0, 0, -10);
+             this.objects.push(table1);
+     
+             fryStation.position.set(5,0, -10);
+              this.objects.push(fryStation);
+    
+            cutStation.position.set(-10,0, -2);
+             this.objects.push(cutStation);
+   
+             cookStation.position.set(10,0, -2);
+             this.objects.push(cookStation);
+               
+            completeTable.position.set(-10,0, 7);
+            this.objects.push(completeTable);
+                       
+            this.scene.add(breadStorage, trash, fryStation, table1, meatStorage, salatStorage, fishStorage, tomatStorage, riceStorage, potatoStorage, 
+            plateStorage, cutStation, cookStation, completeTable);
+            //#endregion
+             break;
             default:
                 console.log(`Lelel number ${lvl} is not defined`);
         }

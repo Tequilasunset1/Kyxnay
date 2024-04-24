@@ -15,11 +15,11 @@ export class TomatStorage extends Storage {
         if(TomatStorage.meshSample == undefined) {
             TomatStorage.meshSample = new Promise((resolve, reject) => {
                 var mtlLoader = new MTLLoader();
-                mtlLoader.load('./src/3D_Objects/SaladeSG.mtl', function(materials) {
+                mtlLoader.load('./src/3D_Objects/TomatSG.mtl', function(materials) {
                     materials.preload();
                     var objLoader = new OBJLoader();
                     objLoader.setMaterials(materials);
-                    objLoader.load('./src/3D_Objects/SaladeSG.obj', function(object) {
+                    objLoader.load('./src/3D_Objects/TomatSG.obj', function(object) {
                         const box = new THREE.Box3().setFromObject(object);
                         const size = new THREE.Vector3();
                         box.getSize(size);

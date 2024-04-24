@@ -36,11 +36,11 @@ export class Character extends THREE.Group {
         if(Character.meshSample == undefined) {
             Character.meshSample = new Promise((resolve, reject) => {
                 var mtlLoader = new MTLLoader();
-                mtlLoader.load('./src/3D_Objects/Pers.mtl', function(materials) {
+                mtlLoader.load('./src/3D_Objects/Pers2.mtl', function(materials) {
                     materials.preload();
                     var objLoader = new OBJLoader();
                     objLoader.setMaterials(materials);
-                    objLoader.load('./src/3D_Objects/Pers.obj', function(object) {
+                    objLoader.load('./src/3D_Objects/Pers2.obj', function(object) {
                         const box = new THREE.Box3().setFromObject(object);
                         const size = new THREE.Vector3();
                         box.getSize(size);
@@ -70,7 +70,7 @@ export class Character extends THREE.Group {
             });
         });
 
-        this.walkSpeed = 0.1;
+        this.walkSpeed = 0.1 * 2;
         this.objInHands = null;
         this.pressed = new Set();
 
