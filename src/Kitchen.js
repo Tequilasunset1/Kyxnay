@@ -39,6 +39,24 @@ export class Kitchen {
     }
 
     getRandomLvl() {
+        let wall = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.5, 30), new THREE.MeshPhongMaterial({color: 0x777777}));
+        wall.position.y = 0.25;
+
+        let wallLeft = wall.clone();
+        wallLeft.position.set(-15, 0.25, 0);
+        let wallRight = wallLeft.clone();
+        wallRight.position.x = 15;
+
+        let wallFront = wall.clone();
+        wallFront.rotateY(Math.PI / 2);
+        wallFront.position.set(0, 0.25, 8);
+        let wallBack = wall.clone();
+        wallBack.rotateY(Math.PI / 2);
+        wallBack.position.set(0, 0.25, -15);
+        this.objects.push(wallLeft, wallRight, wallFront, wallBack);
+        this.scene.add(wallLeft, wallRight, wallFront, wallBack);
+
+
         let lvl = Math.floor(Math.random() * this.lvls.length);
 
         let breadStorage = new BreadStorage(IngridientsTypes.Bread);
@@ -59,7 +77,6 @@ export class Kitchen {
         switch(lvl) {
             case 0:
                 //#region LVL_1;
-                
                 breadStorage.position.set(-8, 0, 7);
                 this.objects.push(breadStorage);
 
